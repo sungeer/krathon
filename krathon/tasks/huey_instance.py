@@ -2,7 +2,7 @@ from huey import RedisHuey
 from redis import ConnectionPool
 
 from krathon.configs import settings
-from krathon.tasks.log_config import logger
+from krathon.tasks.log_config import logger  # 配置日志记录器
 
 connection_pool = ConnectionPool(
     host=settings.redis_host,
