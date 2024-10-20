@@ -1,2 +1,2 @@
 # krathon
-Distributed Task Queue.
+Distributed Task Scheduling System Based on Huey.
