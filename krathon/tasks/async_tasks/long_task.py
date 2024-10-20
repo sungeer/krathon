@@ -1,6 +1,6 @@
 import time
 
-from krathon.utils.log_util import logger
+from krathon.tasks.log_config import logger
 from krathon.tasks.huey_instance import huey
 
 
