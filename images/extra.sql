@@ -8,40 +8,40 @@ TRUNCATE TABLE table_name;
 
 
 CREATE TABLE workflow (
-    ID INT(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    Name VARCHAR(255) NOT NULL COMMENT '流程名称',
-    Description TEXT NOT NULL COMMENT '描述',
+    id INT(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    name VARCHAR(255) NOT NULL COMMENT '流程名称',
+    description TEXT NOT NULL COMMENT '描述',
 
-    PRIMARY KEY (ID) USING BTREE
+    PRIMARY KEY (id) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='流程';
 
 
 CREATE TABLE node (
-    ID INT(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    WorkflowID INT(10) NOT NULL COMMENT 't_workflow',
-    Name VARCHAR(255) NOT NULL COMMENT '节点名称',
-    Order INT NOT NULL COMMENT '节点顺序',
-    Func VARCHAR(255) NOT NULL COMMENT '调用的接口',
-    Group INT(10) DEFAULT 0 COMMENT '并行调用组',
+    id INT(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    workflow_id INT(10) NOT NULL COMMENT 't_workflow',
+    name VARCHAR(255) NOT NULL COMMENT '节点名称',
+    order INT NOT NULL COMMENT '节点顺序',
+    func VARCHAR(255) NOT NULL COMMENT '调用的接口',
+    group INT(10) DEFAULT 0 COMMENT '并行调用组',
 
-    PRIMARY KEY (ID) USING BTREE,
-    INDEX WorkflowID (WorkflowID) USING BTREE
+    PRIMARY KEY (id) USING BTREE,
+    INDEX idx_workflow_id (workflow_id) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='节点';
 
 
 CREATE TABLE record (
-    ID INT(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    WorkflowID INT(10) NOT NULL COMMENT 't_workflow',
-    NodeID INT(10) NOT NULL COMMENT 't_node',
-    Status ENUM('pending', 'active', 'done') DEFAULT 'pending' COMMENT '执行状态',
-    Func VARCHAR(255) NOT NULL COMMENT '调用的接口',
-    Result TEXT COMMENT '执行结果',
-    CreatedTime DATETIME DEFAULT CURRENT_TIMESTAMP,
-    UpdatedTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id INT(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+    workflow_id INT(10) NOT NULL COMMENT 't_workflow',
+    node_id INT(10) NOT NULL COMMENT 't_node',
+    status ENUM('pending', 'active', 'done') DEFAULT 'pending' COMMENT '执行状态',
+    func VARCHAR(255) NOT NULL COMMENT '调用的接口',
+    result TEXT COMMENT '执行结果',
+    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (ID) USING BTREE,
-    INDEX WorkflowID (WorkflowID) USING BTREE,
-    INDEX NodeID (NodeID) USING BTREE
+    PRIMARY KEY (id) USING BTREE,
+    INDEX idx_workflow_id (workflow_id) USING BTREE,
+    INDEX idx_node_id (node_id) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='节点执行';
 
 -- ext
