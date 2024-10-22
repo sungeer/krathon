@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Blueprint
 
 from krathon.models.user_model import UserModel
 from krathon.utils.tools import jsonify, abort
@@ -6,7 +6,10 @@ from krathon.utils import jwt_util
 from krathon.utils.schemas import access_token_schema
 from krathon.utils.decorators import validate_request
 
+route = Blueprint('user', __name__)
 
+
+@route.post('/get-access-token')
 @validate_request(access_token_schema)
 def get_access_token():
     body = request.json
