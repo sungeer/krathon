@@ -17,6 +17,6 @@ dbpool = PooledDB(
 )
 
 
-def create_dbconn_mysql():
+def create_dbconn():
     conn = dbpool.connection()
     return conn

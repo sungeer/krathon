@@ -1,57 +1,52 @@
-from krathon.utils.db_util import create_dbconn_mysql
+from krathon.utils.db_util import create_dbconn
 
 
 class BaseModel:
     def __init__(self):
-        self.dbconn = None
         self.cursor = None
+        self._conn = None
 
     def conn(self):
         if not self.cursor:
-            if not self.dbconn:
-                self.dbconn = create_dbconn_mysql()
-            self.cursor = self.dbconn.cursor()
+            self._conn = create_dbconn()  # 获取一个数据库连接
+            self.cursor = self._conn.cursor()
 
     def rollback(self):
-        if self.dbconn:
-            self.dbconn.rollback()
+        self._conn.rollback()
 
     def commit(self):
         try:
-            self.dbconn.commit()
-        except Exception as exc:
+            self._conn.commit()
+        except Exception:
             self.rollback()
-            raise Exception(f'db commit failed: {exc}')
+            raise
 
     def begin(self):
-        if self.dbconn:
-            self.dbconn.begin()
+        self._conn.begin()
 
     def close(self):
         try:
-            if self.dbconn:
-                if self.cursor:
-                    self.cursor.execute('UNLOCK TABLES;')
-                    self.cursor.close()
-                self.dbconn.close()
-        except Exception as exc:
-            raise Exception(f'db close failed: {exc}')
+            if self.cursor:
+                self.cursor.execute('UNLOCK TABLES;')
+                self.cursor.close()
+            if self._conn:
+                self._conn.close()
         finally:
             self.cursor = None
-            self.dbconn = None
+            self._conn = None
 
     def execute(self, sql_str, values=None):
         try:
             self.cursor.execute(sql_str, values)
-        except Exception as exc:
+        except Exception:
             self.rollback()
             self.close()
-            raise Exception(f'db execute failed: {exc}')
+            raise
 
     def executemany(self, sql_str, values=None):
         try:
             self.cursor.executemany(sql_str, values)
-        except Exception as exc:
+        except Exception:
             self.rollback()
             self.close()
-            raise Exception(f'db executemany failed: {exc}')
+            raise
