@@ -2,7 +2,7 @@
 
 *A distributed task scheduling system based on Huey.*
 
-> Simple Async Queues: *[viper](https://github.com/sungeer/pulasan)*.
+> Simple Async Queues: *[viper](https://github.com/sungeer/viper)*.
 
 ## Installation
 
