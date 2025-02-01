@@ -13,7 +13,7 @@ def get_access_token(phone_number, password):
 
 
 if __name__ == '__main__':
-    phone_number = '18112286003'
-    password = 'SM!9$5&3'
+    phone_number = ''
+    password = ''
     access_token = get_access_token(phone_number, password)
     print(access_token)
