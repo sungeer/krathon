@@ -1,8 +1,6 @@
-# Krathon
+# Kimi
 
 *A distributed task scheduling system based on Huey.*
-
-> Simple Async Queues: *[viper](https://github.com/sungeer/viper)*.
 
 ## Installation
 
@@ -22,13 +20,13 @@ $ pip install -r requirements.txt
 
 run:
 ```
-$ granian --interface wsgi krathon:app
+$ granian --interface wsgi kimi:app
 * Running on http://127.0.0.1:8000/
 ```
 
 run distributed scheduling:
 ```
-$ huey_consumer krathon.tasks.huey_instance.huey
+$ huey_consumer kimi.tasks.huey_instance.huey
 ```
 
 ## License
