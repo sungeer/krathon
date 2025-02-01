@@ -1,6 +1,8 @@
-from krathon.models.base_model import BaseModel
+from kimi.models.base_model import BaseModel
+from kimi.utils.decorators import sync_to_async_db
 
 
+@sync_to_async_db
 class UserModel(BaseModel):
 
     def get_user_by_phone(self, phone_number):

@@ -1,22 +1,19 @@
-from flask import request, Blueprint
+from quart import request, Blueprint
 
-from krathon.models.user_model import UserModel
-from krathon.utils.tools import jsonify, abort
-from krathon.utils import jwt_util
-from krathon.utils.schemas import access_token_schema
-from krathon.utils.decorators import validate_request
+from kimi.models.user_model import UserModel
+from kimi.utils.resp_util import jsonify, abort
+from kimi.utils import jwt_util
 
 route = Blueprint('user', __name__)
 
 
 @route.post('/get-access-token')
-@validate_request(access_token_schema)
-def get_access_token():
-    body = request.json
+async def get_access_token():
+    body = await request.json
     phone_number = body['phone_number']
     password = body['password']
 
-    db_user = UserModel().get_user_by_phone(phone_number)
+    db_user = await UserModel().get_user_by_phone(phone_number)
     if not db_user:
         return abort(404, 'User not found')
 

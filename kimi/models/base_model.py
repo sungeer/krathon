@@ -1,14 +1,15 @@
-from krathon.utils.db_util import create_dbconn
+from kimi.utils.db_util import create_dbconn
 
 
 class BaseModel:
+
     def __init__(self):
         self.cursor = None
         self._conn = None
 
     def conn(self):
         if not self.cursor:
-            self._conn = create_dbconn()  # 获取一个数据库连接
+            self._conn = create_dbconn()
             self.cursor = self._conn.cursor()
 
     def rollback(self):
